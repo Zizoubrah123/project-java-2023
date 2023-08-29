@@ -53,8 +53,10 @@ public class SecurityConfig {
       .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     )
     .authorizeHttpRequests(authorize -> authorize
-      .requestMatchers(HttpMethod.POST, "/api/v1/signup", "/api/v1/signin").permitAll()
-      .requestMatchers(HttpMethod.GET, "/api/v1/test/**").permitAll()
+      .requestMatchers(HttpMethod.POST, "/api/v1/**").permitAll()
+      .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+      .requestMatchers(HttpMethod.PUT, "/api/v1/**").permitAll()
+      .requestMatchers(HttpMethod.DELETE, "/api/v1/**").permitAll()
       .anyRequest().authenticated()
     )
     .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
