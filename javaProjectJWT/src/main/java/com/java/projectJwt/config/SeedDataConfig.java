@@ -33,6 +33,7 @@ public class SeedDataConfig implements CommandLineRunner {
                       .email("admin@admin.com")
                       .password(passwordEncoder.encode("password"))
                       .role(Role.ROLE_ADMIN)
+                      .phNum(12121212)
                       .build();
 
         userService.save(admin);

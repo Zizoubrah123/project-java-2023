@@ -42,8 +42,10 @@ public class UserApi {
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> update(@Valid @RequestBody User user, BindingResult result,
 			@PathVariable("id") Long id) {
+		if (id==1) {
+			return ResponseEntity.status(400).body("can't update");
+		}
 		if (result.hasErrors()) {
-
 			return ResponseEntity.status(400).body(result.getAllErrors());
 
 		} else {
