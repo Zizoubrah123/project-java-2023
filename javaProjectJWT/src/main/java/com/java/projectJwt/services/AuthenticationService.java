@@ -2,6 +2,7 @@ package com.java.projectJwt.services;
 
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +28,7 @@ public class AuthenticationService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
-  public JwtAuthenticationResponse signup(SignUpRequest request,BindingResult result) {
+  public ResponseEntity<Object> signup(SignUpRequest request,BindingResult result) {
 	  Optional<User> potentialUser = userRepository.findByEmail(request.getEmail());
 		if(potentialUser.isPresent()) {
 			result.rejectValue("email", "registerError", "Email is Taken");
@@ -38,8 +39,7 @@ public class AuthenticationService {
 		}
 		
 		if(result.hasErrors()) {
-			System.out.println(result.getAllErrors());
-			return JwtAuthenticationResponse.builder().token(result.getAllErrors().toString()).build();
+			return ResponseEntity.status(400).body(result.getAllErrors());
 		}else {
 
 		
@@ -55,17 +55,18 @@ public class AuthenticationService {
 
       user = userService.save(user);
       var jwt = jwtService.generateToken(user);
-      return JwtAuthenticationResponse.builder().token(jwt).build();}
+       return ResponseEntity.status(200).body(JwtAuthenticationResponse.builder().token(jwt).build());
+		}
   }
 
 
-  public JwtAuthenticationResponse signin(SignInRequest request) {
+  public ResponseEntity<Object> signin(SignInRequest request) {
       authenticationManager.authenticate(
               new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
       var user = userRepository.findByEmail(request.getEmail())
               .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
       var jwt = jwtService.generateToken(user);
-      return JwtAuthenticationResponse.builder().token(jwt).build();
+      return ResponseEntity.status(200).body(JwtAuthenticationResponse.builder().token(jwt).build());
   }
   
 }

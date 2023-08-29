@@ -11,6 +11,7 @@ import Footer from '../components/landingPage/Footer'
 
 function LandingPage() {
   return (
+    <div>
     <div className='bg-primary-black overflow-hidden'>
         <NavBar/>
         <Hero/>
@@ -21,7 +22,7 @@ function LandingPage() {
         <World/>
         <Insights/>
         <Footer/>
-    </div>
+    </div></div>
   )
 }
 

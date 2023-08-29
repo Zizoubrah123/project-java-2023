@@ -1,6 +1,8 @@
 package com.java.projectJwt.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,23 +18,28 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public JwtAuthenticationResponse signup(@Valid @RequestBody SignUpRequest request,BindingResult result) {
+    public ResponseEntity<Object> signup(@Valid @RequestBody SignUpRequest request,BindingResult result) {
 
 		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
-			return JwtAuthenticationResponse.builder().token(result.getAllErrors().toString()).build();
+			return  ResponseEntity.status(400).body(result.getAllErrors());
 		}
     	return authenticationService.signup(request,result);
     }
 
     @PostMapping("/signin")
-    public JwtAuthenticationResponse signin(@RequestBody SignInRequest request) {
+    public ResponseEntity<Object> signin(@Valid @RequestBody SignInRequest request,BindingResult result) {
+    	if (result.hasErrors()) {
+			System.out.println(result.getAllErrors());
+			return  ResponseEntity.status(400).body(result.getAllErrors());
+		}
         return authenticationService.signin(request);
     }
     

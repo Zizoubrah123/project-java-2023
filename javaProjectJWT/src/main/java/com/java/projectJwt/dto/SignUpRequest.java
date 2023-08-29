@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SignUpRequest {
-	@NotEmpty(message="firstName is required!")
+	@NotEmpty
     @Size(min=3, max=30, message="FirstName must be between 3 and 30 characters")
     private String firstName;
     
