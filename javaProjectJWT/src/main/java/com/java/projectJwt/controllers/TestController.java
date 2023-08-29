@@ -16,7 +16,7 @@ public class TestController {
   }
 
   @GetMapping("/users")
-  @PreAuthorize("hasRole('USER')")
+  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   public String usersEndPoint() {
     return "ONLY users can see this";
   }
