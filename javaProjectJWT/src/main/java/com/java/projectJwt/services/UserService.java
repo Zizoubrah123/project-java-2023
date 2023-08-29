@@ -1,11 +1,12 @@
 package com.java.projectJwt.services;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.java.projectJwt.models.User;
@@ -33,6 +34,9 @@ public class UserService {
     
     return userRepository.save(newUser);
   }
+  
+  
+  
   public Optional<User> findOne(Long id) {
   	Optional<User> maybeUser = userRepository.findById(id);
   	if(maybeUser.isPresent()) {
@@ -42,4 +46,24 @@ public class UserService {
   	}
   }
 
-}
+
+ // READ ALL
+ 	public List<User> allUser(){
+ 		return userRepository.findAll();
+ 	}
+ 	
+ 	
+ 	// UPDATE 
+ 	public User update(User o) {
+ 		// Hash and set password, save the user to database
+ 		String hashdPW = BCrypt.hashpw(o.getPassword(), BCrypt.gensalt());
+ 		o.setPassword(hashdPW);
+ 		return userRepository.save(o);
+ 	}
+ 	
+ 	// DELETE
+ 	public void delete(Long id) {
+ 		userRepository.deleteById(id);
+ 	}
+  }
+
