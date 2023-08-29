@@ -27,44 +27,44 @@ export const exploreWorlds = [
   ];
   
   export const startingFeatures = [
-    'Find a world that suits you and you want to enter',
-    'Enter the world by reading basmalah to be safe',
-    'No need to beat around the bush, just stay on the gas and have fun',
+    'To get started with our 3D customization, simply create a free account on our website.',
+    "A premium account offers advanced features such as custom textures and animations to create a unique and personalized product.",
+    "Once you've customized your product to your liking, simply add it to your cart and check out. It's that easy!",
   ];
   
   export const newFeatures = [
     {
-      imgUrl: 'https://images.pexels.com/photos/2752045/pexels-photo-2752045.jpeg?auto=compress&cs=tinysrgb&w=600',
-      title: 'A new world',
+      imgUrl: 'https://cdn-icons-png.flaticon.com/512/5352/5352826.png',
+      
       subtitle:
-          'we have the latest update with new world for you to try never mind',
+          'We are excited to announce that our website now offers the ability for users to create their own products using AI .',
     },
     {
-      imgUrl: 'https://images.pexels.com/photos/1485031/pexels-photo-1485031.jpeg?auto=compress&cs=tinysrgb&w=600',
-      title: 'More realistic',
+      imgUrl: 'https://cdn-icons-png.flaticon.com/512/2953/2953363.png',
+      
       subtitle:
-          'In the latest update, your eyes are narrow, making the world more realistic than ever',
+          'Sell them for a profit. As a user, you can earn a percentage of the profits from your creations',
     },
   ];
   
   export const insights = [
     {
       imgUrl: 'https://images.pexels.com/photos/1631181/pexels-photo-1631181.jpeg?auto=compress&cs=tinysrgb&w=600',
-      title: 'The launch of the Metaverse makes Elon musk ketar-ketir',
+      title: 'Customization First',
       subtitle:
-          'Magna etiam tempor orci eu lobortis elementum nibh tellus molestie. Diam maecenas sed enim ut sem viverra alique.',
+          'Allow users to customize their product preferences before navigating to the product page. This can include size, color, and other relevant options.',
     },
     {
       imgUrl: 'https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=600',
-      title: '7 tips to easily master the madness of the Metaverse',
+      title: 'Streamlined Navigation',
       subtitle:
-          'Vitae congue eu consequat ac felis donec. Et magnis dis parturient montes nascetur ridiculus mus. Convallis tellus id interdum',
+          'Simplify the product navigation process by reducing the number of clicks required to find a specific product. This can be achieved by implementing filters and search functionality.',
     },
     {
       imgUrl: 'https://images.pexels.com/photos/2233703/pexels-photo-2233703.jpeg?auto=compress&cs=tinysrgb&w=600',
-      title: 'With one platform you can explore the whole world virtually',
+      title: 'Order Status Visibility',
       subtitle:
-          'Quam quisque id diam vel quam elementum. Viverra nam libero justo laoreet sit amet cursus sit. Mauris in aliquam sem',
+          'Provide users with easy access to their order status and history. This can be achieved by implementing a dedicated order tracking page or integrating order status updates into the user account dashboard.',
     },
   ];
   
