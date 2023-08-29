@@ -3,6 +3,7 @@ package com.java.projectJwt.dto;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +26,7 @@ public class SignUpRequest {
     @NotEmpty(message="Email is required!")
     @Email(message="Please enter a valid email!")
     private String email;
-    
+    @NotNull(message="Phone number is required!")
     @Digits(message="Number should contain 10 digits.", fraction = 0, integer = 10)
     private Integer phNum;
      
