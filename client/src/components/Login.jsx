@@ -13,12 +13,8 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({
-    login: {
-      email: "",
-      password: "",
-    },
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // handel onChange htmlFor login inputs
   const handleLoginChange = (e) => {
@@ -39,15 +35,18 @@ const Login = () => {
         // setLogedUser(res.data.userFromDB.firstName);
         // console.log("*****************", logedUser);
         console.log(res);
-        navigate("/product/list");
+        navigate("/");
       })
       .catch((err) => {
-        // console.log("❌❌❌", err.response);
-        setErrors({
-          ...errors,
-          login: err.response.data,
+        console.log("❌❌❌", err.response.data);
+        err.response.data.map(({ field, defaultMessage }, index) => {
+          if (field === "email") {
+            setEmail("Please enter a valid email!");
+          }
+          if (field === "password") {
+            setPassword("Please enter a valid Password. Please Try Again");
+          }
         });
-        console.log("ddddddddd", err.response.data);
       });
   };
   return (
@@ -79,7 +78,7 @@ const Login = () => {
                     name="email"
                     value={login.email}
                     onChange={handleLoginChange}
-                  />{" "}
+                  />{email?<p style={{ color: "red" }}>{email}</p>:null}
                 </div>
                 <div>
                   <label
@@ -96,7 +95,7 @@ const Login = () => {
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required=""
-                  />
+                  />{password?<p style={{ color: "red" }}>{password}</p>:null}
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-start">

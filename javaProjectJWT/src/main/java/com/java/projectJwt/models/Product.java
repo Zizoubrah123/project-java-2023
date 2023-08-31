@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -62,7 +64,7 @@ public class Product {
 	//M:M
 	 @ManyToMany(fetch = FetchType.LAZY)
 	    @JoinTable(
-	    		name = "allproduct", 
+	    		name = "OrderProducts", 
 	    		joinColumns = @JoinColumn(name = "product_id"), 
 	    		inverseJoinColumns = @JoinColumn(name="order_id"))
 	    private List <Order> orders;
@@ -98,6 +100,7 @@ public class Product {
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}
+	@JsonIgnore
 	public List<Order> getOrders() {
 		return orders;
 	}

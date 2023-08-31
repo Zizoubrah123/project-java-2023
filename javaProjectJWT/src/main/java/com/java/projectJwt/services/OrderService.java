@@ -7,18 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.java.projectJwt.models.Order;
+import com.java.projectJwt.models.Product;
+import com.java.projectJwt.models.User;
 import com.java.projectJwt.repositories.OrderRepo;
+import com.java.projectJwt.repositories.ProductRepo;
+import com.java.projectJwt.repositories.UserRepository;
 
 
 
 
 @Service
+
 public class OrderService {
 
 	// === CRUD ===
 	
 	@Autowired
 	private OrderRepo orderRepo;
+	
+	@Autowired
+	private ProductRepo productRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
 	
 	// READ ALL
 		public List<Order> allOrder(){
@@ -27,6 +38,7 @@ public class OrderService {
 		
 		// CREATE
 		public Order create(Order o) {
+
 			return orderRepo.save(o);
 		}
 		
@@ -42,7 +54,15 @@ public class OrderService {
 		}
 		
 		// UPDATE 
-		public Order update(Order o) {
+		public Order update(Order o,Long prod_id) {
+		Optional<Product>	product=productRepo.findById(prod_id);
+//		Optional<User> userr = userRepo.findById((long) 1);
+//		System.out.println(userr);
+		if(product.isPresent()) {
+			
+			o.getProducts().add(product.get());
+		}
+		
 			return orderRepo.save(o);
 		}
 		

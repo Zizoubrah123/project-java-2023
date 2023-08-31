@@ -1,9 +1,12 @@
 package com.java.projectJwt.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,10 +57,10 @@ public class Order {
 		//M:M
 		 @ManyToMany(fetch = FetchType.LAZY)
 		    @JoinTable(
-		    		name = "allorder", 
+		    		name = "OrderProducts", 
 		    		joinColumns = @JoinColumn(name = "order_id"), 
 		    		inverseJoinColumns = @JoinColumn(name="product_id"))
-		    private List <Product> products;
+		    private List <Product> products=new ArrayList<>();
 		
 
 	    @Column(updatable=false)
@@ -108,6 +111,7 @@ public class Order {
 		public void setQuantity(Integer quantity) {
 			this.quantity = quantity;
 		}
+		@JsonIgnore
 		public User getUser() {
 			return user;
 		}

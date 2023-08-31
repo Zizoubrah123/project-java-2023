@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-import { cartImg, bazaarlogo } from "../../assets/index";
-
+import { bazaarlogo } from "../../assets/index";
+import { VscAccount } from 'react-icons/vsc';
+import { AiOutlineHeart } from 'react-icons/ai';
+import { LiaShoppingBagSolid } from 'react-icons/lia';
 function NavBar() {
     const userInfo=false;
-
+    const style = { color: "white", fontSize: "2.2em" }
   return (
 <div className="w-full h-20  font-titleFont border-b-[1px] border-b-gray-800 sticky top-0 z-50">
       <div className="max-w-screen-xl h-full mx-auto flex items-center justify-between">
@@ -20,42 +22,39 @@ function NavBar() {
                 Home
               </li>
             </Link>
+            <Link to="/shop">
             <li className="text-base text-white font-bold hover:text-orange-900 hover:underline underline-offset-2 decoration-[1px] cursor-pointer duration-300">
               Shop
-            </li>
+            </li></Link>
+            <Link to="/categories">
             <li className="text-base text-white font-bold hover:text-orange-900 hover:underline underline-offset-2 decoration-[1px] cursor-pointer duration-300">
               Categories
-            </li>
+            </li></Link>
+            <Link to="/how">
             <li className="text-base text-white font-bold hover:text-orange-900 hover:underline underline-offset-2 decoration-[1px] cursor-pointer duration-300">
               How?
-            </li>
+            </li></Link>
           </ul>
           <Link to="/cart">
             <div className="relative">
-              <img className="w-6" src={cartImg} alt="cartImg" />
-              <span className="absolute w-6 top-2 left-0 text-sm flex items-center justify-center font-semibold font-titleFont">
+              {/* <img className="w-6" src={cartImg} alt="cartImg" /> */}
+              <LiaShoppingBagSolid style={style}/>
+              <span className="absolute w-6 top-6 left-6 text-sm flex text-white items-center justify-center font-semibold font-titleFont">
                 3
               </span>
             </div>
           </Link>
           <Link to="/favorite">
             <div className="relative">
-              <img className="w-8" src="https://imgbin.com/img/icon_likes.png" alt="favorite img" />
-              <span className="absolute w-8 top-1 left-0 text-sm flex items-center justify-center font-semibold font-titleFont">
+              {/* <img className="w-8" src="https://imgbin.com/img/icon_likes.png" alt="favorite img" /> */}
+              <AiOutlineHeart style={style}/>
+              <span className="absolute w-8 top-6 left-4 text-xs flex items-center justify-center font-semibold font-titleFont text-white">
                 3
               </span>
             </div>
           </Link>
           <Link to="/login">
-            <img
-              className="w-8 h-8 rounded-full"
-              src={
-                userInfo
-                  ? userInfo.image
-                  : "https://png.pngtree.com/png-vector/20190221/ourmid/pngtree-male-avatar-vector-icon-png-image_691595.jpg"
-              }
-              alt="userLogo"
-            />
+            <VscAccount style={style}/>
           </Link>
 
           {userInfo && (
