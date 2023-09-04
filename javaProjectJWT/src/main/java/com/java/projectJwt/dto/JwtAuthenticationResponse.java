@@ -11,5 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JwtAuthenticationResponse {
   String token;
+  String firstName;
+  String lastName;
+  String email;
   Long id;
 }

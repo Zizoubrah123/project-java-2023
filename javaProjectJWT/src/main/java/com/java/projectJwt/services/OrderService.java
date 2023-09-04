@@ -56,8 +56,9 @@ public class OrderService {
 		// UPDATE 
 		public Order update(Order o,Long prod_id) {
 		Optional<Product>	product=productRepo.findById(prod_id);
-//		Optional<User> userr = userRepo.findById((long) 1);
-//		System.out.println(userr);
+		Optional<User> userr = userRepo.findById((long) 1);
+		System.out.println(userr);
+		o.setUser(userr.get());
 		if(product.isPresent()) {
 			
 			o.getProducts().add(product.get());

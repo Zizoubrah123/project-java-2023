@@ -1,10 +1,10 @@
 package com.java.projectJwt.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,7 +16,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -24,69 +23,139 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="products")
 public class Product {
-	// MEMBER VARIABLES
- 	@Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @NotEmpty(message="Title is required!")
-    @Size(min=3, max=30, message="Title must be between 3 and 30 characters")
-    private String title;
-    
-	@NotNull
-	@Min(0)
-	private Integer price;
-    
-	@NotNull
-	@Size(min = 5, max = 200, message = "you need a desciption!!!!")
-	private String description;
-
-	// M:1
+    private String name;
+    private double originalPrice;
+    private double discountedPrice;
+    private String categoryName;
+    private boolean stock;
+    private double rating;
+    private String description;
+    private boolean trending;
+    private int size;
+    private String img;
+	@JsonIgnore
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
 	private User user;
  
 	// 1:M
+	@Builder.Default
 	@OneToMany(mappedBy="product", fetch = FetchType.LAZY)
-	private List<Review> reviews;
+	private List<Review> reviews=new ArrayList<>();
 
 	//M:M
+	@Builder.Default
 	 @ManyToMany(fetch = FetchType.LAZY)
 	    @JoinTable(
 	    		name = "OrderProducts", 
 	    		joinColumns = @JoinColumn(name = "product_id"), 
 	    		inverseJoinColumns = @JoinColumn(name="order_id"))
-	    private List <Order> orders;
-		
-	 private String imageName;
-
-	 
-	 
+	    private List <Order> orders=new ArrayList<>();
+	@JsonIgnore
+	@OneToMany(mappedBy = "products", fetch = FetchType.LAZY)
+	    private List<Wishlist> wishlist;
+	 @JsonIgnore
 	 @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-	    private List<Favorite> favorites;
+	    private List<CartProduct> cartProduct;
 	 
-	public List<Favorite> getFavorites() {
-		return favorites;
+	@Column(updatable=false)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date createdAt;
+	
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date updatedAt;
+    
+    @PrePersist
+    protected void onCreate(){
+        this.createdAt = new Date();
+    }
+    @PreUpdate
+    protected void onUpdate(){
+        this.updatedAt = new Date();
+    }
+	public Long getId() {
+		return id;
 	}
-	public void setFavorites(List<Favorite> favorites) {
-		this.favorites = favorites;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public String getImageName() {
-		return imageName;
+	public String getName() {
+		return name;
 	}
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public double getOriginalPrice() {
+		return originalPrice;
+	}
+	public void setOriginalPrice(double originalPrice) {
+		this.originalPrice = originalPrice;
+	}
+	public double getDiscountedPrice() {
+		return discountedPrice;
+	}
+	public void setDiscountedPrice(double discountedPrice) {
+		this.discountedPrice = discountedPrice;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public boolean isStock() {
+		return stock;
+	}
+	public void setStock(boolean stock) {
+		this.stock = stock;
+	}
+	public double getRating() {
+		return rating;
+	}
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public boolean isTrending() {
+		return trending;
+	}
+	public void setTrending(boolean trending) {
+		this.trending = trending;
+	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	public User getUser() {
 		return user;
@@ -100,59 +169,23 @@ public class Product {
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}
-	@JsonIgnore
 	public List<Order> getOrders() {
 		return orders;
 	}
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
-	@Column(updatable=false)
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date createdAt;
-	
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date updatedAt;
-    
-//	----- methods ---
-    // other getters and setters removed for brevity
-    @PrePersist
-    protected void onCreate(){
-        this.createdAt = new Date();
-    }
-    @PreUpdate
-    protected void onUpdate(){
-        this.updatedAt = new Date();
-    }
-	// EMPTY CONSTRUCTOR
-    public Product (){}
-	public Long getId() {
-		return id;
+	public List<Wishlist> getWishlist() {
+		return wishlist;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setWishlist(List<Wishlist> wishlist) {
+		this.wishlist = wishlist;
 	}
-	public String getTitle() {
-		return title;
+	public List<CartProduct> getCartProduct() {
+		return cartProduct;
 	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	
-	public Integer getPrice() {
-		return price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setCartProduct(List<CartProduct> cartProduct) {
+		this.cartProduct = cartProduct;
 	}
 	public Date getCreatedAt() {
 		return createdAt;
@@ -166,7 +199,6 @@ public class Product {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-    
-    
+	
     
 }

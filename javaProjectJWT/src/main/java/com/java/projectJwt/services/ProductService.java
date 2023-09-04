@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.java.projectJwt.models.Product;
+import com.java.projectJwt.models.User;
 import com.java.projectJwt.repositories.ProductRepo;
+import com.java.projectJwt.repositories.UserRepository;
 
 @Service
 public class ProductService {
@@ -15,6 +17,8 @@ public class ProductService {
 	
 	@Autowired
 	private ProductRepo productRepo;
+	@Autowired
+	private UserRepository userRepo;
 	
 	// READ ALL
 		public List<Product> allProduct(){
@@ -23,6 +27,9 @@ public class ProductService {
 		
 		// CREATE
 		public Product create(Product p) {
+			System.out.println(p);
+			User  user=userRepo.getById((long) 1);
+			p.setUser(user);
 			return productRepo.save(p);
 		}
 		

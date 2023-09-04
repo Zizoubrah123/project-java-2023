@@ -32,7 +32,7 @@ public class ProductApi {
 	}
 	@GetMapping("/products")
 	public ResponseEntity<Object>  index() {
-		
+		System.out.println(productservice.allProduct().get(0).getUser().getEmail());
 		return ResponseEntity.ok().body(productservice.allProduct());
 	}
 	  
@@ -41,7 +41,6 @@ public class ProductApi {
 	@PostMapping("/products")
 	public ResponseEntity<Object> createProductWithImage(@Valid @RequestBody Product product, BindingResult result
 	        ) {
-
 	    if (result.hasErrors()) {
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result.getAllErrors());
 	    }

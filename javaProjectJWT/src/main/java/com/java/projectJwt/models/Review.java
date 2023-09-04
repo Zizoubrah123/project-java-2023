@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -44,6 +46,7 @@ public class Review {
 	    
 
 		// M:1
+		
 		@ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name="product_id")
 		private Product product;

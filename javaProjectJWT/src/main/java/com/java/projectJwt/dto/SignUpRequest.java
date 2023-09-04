@@ -26,9 +26,7 @@ public class SignUpRequest {
     @NotEmpty(message="Email is required!")
     @Email(message="Please enter a valid email!")
     private String email;
-    @NotNull(message="Phone number is required!")
-    @Digits(message="Number should contain 10 digits.", fraction = 0, integer = 10)
-    private Integer phNum;
+
      
     @NotEmpty(message="Password is required!")
     @Size(min=8, max=128, message="Password must be between 8 and 128 characters")

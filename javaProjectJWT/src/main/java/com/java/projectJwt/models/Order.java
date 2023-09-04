@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,12 +51,13 @@ public class Order {
 		@Min(0)
 		private Integer quantity;
 
-		// M:1
-					@ManyToOne(fetch = FetchType.LAZY)
-				    @JoinColumn(name="user_id")
-					private User user;
+		
+		@ManyToOne(fetch = FetchType.LAZY)
+		@JoinColumn(name="user_id")
+		private User user;
 
 		//M:M
+		
 		 @ManyToMany(fetch = FetchType.LAZY)
 		    @JoinTable(
 		    		name = "OrderProducts", 
@@ -111,7 +114,6 @@ public class Order {
 		public void setQuantity(Integer quantity) {
 			this.quantity = quantity;
 		}
-		@JsonIgnore
 		public User getUser() {
 			return user;
 		}

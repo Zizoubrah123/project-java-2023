@@ -28,7 +28,6 @@ public class AuthenticationController {
     public ResponseEntity<Object> signup(@Valid @RequestBody SignUpRequest request,BindingResult result) {
 
 		if (result.hasErrors()) {
-			System.out.println(result.getAllErrors());
 			return  ResponseEntity.status(400).body(result.getAllErrors());
 		}
     	return authenticationService.signup(request,result);

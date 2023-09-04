@@ -1,5 +1,6 @@
 package com.java.projectJwt.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,12 +37,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -57,9 +60,7 @@ public class User implements UserDetails {
   @NotEmpty(message="Password is required!")
   @Size(min=8, max=128, message="Password must be between 8 and 128 characters")
   String password;
-  @NotNull(message="Phone number is required!")
-  @Digits(message="Number should contain 10 digits.", fraction = 0, integer = 10)
-  private Integer phNum;
+
 
   @Enumerated(EnumType.STRING)
   Role role;
@@ -68,19 +69,24 @@ public class User implements UserDetails {
   
   
 	// 1:M
+  @Builder.Default
+  	@JsonIgnore
 	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
-	private List<Product> products;
+	private List<Product> products=new ArrayList<>();
  
 
 	
 	// 1:M
+  @Builder.Default
+  	@JsonIgnore
 	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
-	private List<Order> orders;    
-  
-  
+	private List<Order> orders=new ArrayList<>();    
+  @Builder.Default
 	 @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	 private List<Favorite> favorites;
-  
+	 private List<Wishlist> wishlist=new ArrayList<>();
+  @Builder.Default
+  	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    private List<CartProduct> productInCart=new ArrayList<>();
   
   
   
@@ -133,5 +139,77 @@ public class User implements UserDetails {
   public boolean isEnabled() {
       return true;
   }
+public Long getId() {
+	return id;
+}
+public void setId(Long id) {
+	this.id = id;
+}
+public String getFirstName() {
+	return firstName;
+}
+public void setFirstName(String firstName) {
+	this.firstName = firstName;
+}
+public String getLastName() {
+	return lastName;
+}
+public void setLastName(String lastName) {
+	this.lastName = lastName;
+}
+public String getEmail() {
+	return email;
+}
+public void setEmail(String email) {
+	this.email = email;
+}
+public String getPassword() {
+	return password;
+}
+public void setPassword(String password) {
+	this.password = password;
+}
+public Role getRole() {
+	return role;
+}
+public void setRole(Role role) {
+	this.role = role;
+}
+public List<Product> getProducts() {
+	return products;
+}
+public void setProducts(List<Product> products) {
+	this.products = products;
+}
+public List<Order> getOrders() {
+	return orders;
+}
+public void setOrders(List<Order> orders) {
+	this.orders = orders;
+}
+public List<Wishlist> getWishlist() {
+	return wishlist;
+}
+public void setWishlist(List<Wishlist> wishlist) {
+	this.wishlist = wishlist;
+}
+public List<CartProduct> getProductInCart() {
+	return productInCart;
+}
+public void setProductInCart(List<CartProduct> productInCart) {
+	this.productInCart = productInCart;
+}
+public Date getCreatedAt() {
+	return createdAt;
+}
+public void setCreatedAt(Date createdAt) {
+	this.createdAt = createdAt;
+}
+public Date getUpdatedAt() {
+	return updatedAt;
+}
+public void setUpdatedAt(Date updatedAt) {
+	this.updatedAt = updatedAt;
+}
 
 }
